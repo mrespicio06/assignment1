@@ -6,7 +6,7 @@ on:
 
 jobs:
   
-  build:
+  build db:
     
     name: Build Image
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
         curl localhost -vvv
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-  build:
+  build app:
     
     name: myapp Build Image
     runs-on: ubuntu-latest
