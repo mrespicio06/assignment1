@@ -2,7 +2,7 @@ name: Deploy to ECR
 
 on: 
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   
@@ -32,7 +32,7 @@ jobs:
         ECR_REPOSITORY: clo835-ass1
         IMAGE_TAG: v0.1
       run: |
-        cd clo835_fall2022_assignment1
+        cd clo835_assignment1
         ls -ltra
         # Docker build
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -70,7 +70,7 @@ jobs:
         ECR_REPOSITORY: clo835-ass1-app
         IMAGE_TAG: v0.1
       run: |
-        cd clo835_fall2022_assignment1
+        cd clo835_assignment1
         ls -ltra
         # Docker build
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
