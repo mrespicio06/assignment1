@@ -1,7 +1,6 @@
 
 
 #----------------------------------------------------------
-# ACS730 - Week 3 - Terraform Introduction
 #
 # Build EC2 Instances
 #
@@ -21,7 +20,7 @@ data "aws_ami" "latest_amazon_linux" {
     values = ["amzn2-ami-hvm-*-x86_64-gp2"]
   }
 }
- 
+
 
 # Data source for availability zones in us-east-1
 data "aws_availability_zones" "available" {
@@ -45,12 +44,19 @@ module "globalvars" {
   source = "../../modules/globalvars"
 }
 
+
+# Get an existing IAM instance profile
+data "aws_iam_instance_profile" "lab_profile" {
+  name = "LabInstanceProfile"
+}
+
 # Reference subnet provisioned by 01-Networking 
 resource "aws_instance" "my_amazon" {
   ami                         = data.aws_ami.latest_amazon_linux.id
   instance_type               = lookup(var.instance_type, var.env)
   key_name                    = aws_key_pair.my_key.key_name
-  vpc_security_group_ids             = [aws_security_group.my_sg.id]
+  vpc_security_group_ids      = [aws_security_group.my_sg.id]
+  iam_instance_profile        = data.aws_iam_instance_profile.lab_profile.name
   associate_public_ip_address = false
 
   lifecycle {
